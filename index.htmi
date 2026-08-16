@@ -1,53 +1,146 @@
-medical-cases/
-├── README.md
-├── Cardiology/
-│   ├── Acute-Myocardial-Infarction/
-│   ├── Atrial-Fibrillation/
-│   ├── Heart-Failure/
-│   └── Myocarditis/
-│
-├── Neurology/
-│   ├── Ischemic-Stroke/
-│   ├── Epilepsy/
-│   ├── Meningitis/
-│   └── Parkinson-Disease/
-│
-├── Pulmonology/
-│   ├── Pneumonia/
-│   ├── Asthma/
-│   ├── COPD/
-│   └── Pulmonary-Embolism/
-│
-├── Gastroenterology/
-│   ├── Appendicitis/
-│   ├── Peptic-Ulcer/
-│   ├── Hepatitis/
-│   └── Pancreatitis/
-│
-├── Nephrology/
-│   ├── Acute-Kidney-Injury/
-│   ├── Chronic-Kidney-Disease/
-│   ├── Nephrotic-Syndrome/
-│   └── Glomerulonephritis/
-│
-├── Endocrinology/
-│   ├── Diabetes-Mellitus/
-│   ├── Diabetic-Ketoacidosis/
-│   ├── Hyperthyroidism/
-│   └── Hypothyroidism/
-│
-├── Infectious-Disease/
-│   ├── Sepsis/
-│   ├── Influenza/
-│   ├── Tuberculosis/
-│   └── Dengue-Fever/
-│
-└── Case-Template/
-    ├── README.md
-    ├── History.md
-    ├── Physical-Exam.md
-    ├── Lab-Results.md
-    ├── Imaging.md
-    ├── Diagnosis.md
-    ├── Treatment.md
-    └── Learning-Points.md
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Case Library</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: white;
+      color: #222;
+    }
+
+    header {
+      background: #f4f7fb;
+      padding: 40px 20px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+
+    header p {
+      color: #666;
+      margin-top: 10px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 22px;
+      background: white;
+      text-decoration: none;
+      color: #222;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 21px;
+    }
+
+    .card p {
+      color: #666;
+      margin-bottom: 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #888;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Medical Case Library</h1>
+    <p>醫學病例學習資料庫</p>
+  </header>
+
+  <div class="container">
+
+    <h2 class="section-title">病例分類</h2>
+
+    <div class="grid">
+
+      <a class="card" href="#">
+        <h2>❤️ Cardiology</h2>
+        <p>心臟與心血管疾病病例</p>
+      </a>
+
+      <a class="card" href="#">
+        <h2>🧠 Neurology</h2>
+        <p>神經系統疾病病例</p>
+      </a>
+
+      <a class="card" href="#">
+        <h2>🫁 Pulmonology</h2>
+        <p>肺部與呼吸系統病例</p>
+      </a>
+
+      <a class="card" href="#">
+        <h2>🩺 Gastroenterology</h2>
+        <p>腸胃與肝膽疾病病例</p>
+      </a>
+
+      <a class="card" href="#">
+        <h2>💧 Nephrology</h2>
+        <p>腎臟與泌尿系統病例</p>
+      </a>
+
+      <a class="card" href="#">
+        <h2>🧪 Endocrinology</h2>
+        <p>內分泌與代謝疾病病例</p>
+      </a>
+
+      <a class="card" href="#">
+        <h2>🦠 Infectious Disease</h2>
+        <p>感染症病例</p>
+      </a>
+
+      <a class="card" href="#">
+        <h2>📁 All Cases</h2>
+        <p>查看全部病例</p>
+      </a>
+
+    </div>
+
+  </div>
+
+  <footer>
+    Medical Case Library
+  </footer>
+
+</body>
+</html>
