@@ -1,0 +1,194 @@
+# GitHub 病例資料夾架構
+
+```text
+medical-cases/
+│
+├─ README.md
+│
+├─ cases/
+│  │
+│  ├─ case-001/
+│  │  ├─ README.md
+│  │  ├─ history.md
+│  │  ├─ physical-exam.md
+│  │  ├─ lab-results.md
+│  │  ├─ imaging.md
+│  │  ├─ diagnosis.md
+│  │  ├─ treatment.md
+│  │  └─ learning-points.md
+│  │
+│  ├─ case-002/
+│  │  ├─ README.md
+│  │  ├─ history.md
+│  │  ├─ physical-exam.md
+│  │  ├─ lab-results.md
+│  │  ├─ imaging.md
+│  │  ├─ diagnosis.md
+│  │  ├─ treatment.md
+│  │  └─ learning-points.md
+│  │
+│  └─ case-003/
+│     └─ ...
+│
+├─ diseases/
+│  ├─ cardiovascular/
+│  ├─ respiratory/
+│  ├─ gastrointestinal/
+│  ├─ neurological/
+│  ├─ renal/
+│  ├─ endocrine/
+│  └─ infectious-disease/
+│
+├─ images/
+│  ├─ ecg/
+│  ├─ xray/
+│  ├─ ct/
+│  ├─ mri/
+│  └─ pathology/
+│
+└─ templates/
+   └─ case-template.md
+```
+
+## 每個病例 README.md
+
+```md
+# Case 001
+
+## Basic Information
+- Age:
+- Sex:
+- Chief complaint:
+
+## Presentation
+病人主要症狀與就醫原因。
+
+## Key Findings
+- Vital signs:
+- Physical examination:
+- Laboratory:
+- Imaging:
+
+## Differential Diagnosis
+1.
+2.
+3.
+
+## Final Diagnosis
+疾病名稱
+
+## Treatment
+治療方式
+
+## Outcome
+病人的後續狀況。
+
+## Learning Points
+- 重點 1
+- 重點 2
+- 重點 3
+```
+
+## history.md
+
+```md
+# History
+
+## Chief Complaint
+
+## History of Present Illness
+
+## Past Medical History
+
+## Medication History
+
+## Family History
+
+## Social History
+
+## Review of Systems
+```
+
+## diagnosis.md
+
+```md
+# Diagnosis
+
+## Problem List
+
+1.
+2.
+3.
+
+## Differential Diagnosis
+
+### 1. Disease A
+支持：
+- 
+
+反對：
+-
+
+### 2. Disease B
+支持：
+-
+
+反對：
+-
+
+## Final Diagnosis
+
+## Diagnostic Reasoning
+```
+
+## learning-points.md
+
+```md
+# Learning Points
+
+## Important Symptoms
+
+## Important Signs
+
+## Important Laboratory Findings
+
+## Important Imaging Findings
+
+## Diagnostic Criteria
+
+## Treatment
+
+## Common Exam Traps
+
+## What I Learned
+```
+
+## templates/case-template.md
+
+```md
+# Case XXX
+
+## Patient
+- Age:
+- Sex:
+
+## Chief Complaint
+
+## History
+
+## Physical Examination
+
+## Laboratory Results
+
+## Imaging
+
+## Differential Diagnosis
+
+## Final Diagnosis
+
+## Treatment
+
+## Outcome
+
+## Learning Points
+```
