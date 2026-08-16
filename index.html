@@ -2,303 +2,342 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Shadow of Redemption</title>
 
 <style>
-*{
-  box-sizing:border-box;
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000;font-family:Arial,sans-serif}
+#movie{position:relative;width:100vw;height:100vh;background:#050505;overflow:hidden}
+
+/* ===== 場景 ===== */
+#scene{
+ position:absolute;inset:0;
+ transition:background 1s,transform 4s,filter 1s;
 }
 
-body{
-  margin:0;
-  background:#000;
-  color:white;
-  font-family:Arial,"Microsoft JhengHei",sans-serif;
-  overflow:hidden;
+.street{
+ background:
+ linear-gradient(90deg,transparent 48%,rgba(255,220,150,.12) 50%,transparent 52%),
+ linear-gradient(#07101b 0 60%,#111 60%);
 }
 
-#movie{
-  position:relative;
-  width:100vw;
-  height:100vh;
-  background:#050505;
-  overflow:hidden;
+.police{
+ background:
+ linear-gradient(90deg,transparent 65%,rgba(100,170,220,.12)),
+ linear-gradient(#15202b 0 65%,#242424 65%);
 }
 
-/* 電影黑邊 */
-#movie::before,
-#movie::after{
-  content:"";
-  position:absolute;
-  left:0;
-  width:100%;
-  height:7vh;
-  background:black;
-  z-index:50;
+.abandoned{
+ background:
+ linear-gradient(120deg,#151515,#252525 45%,#080808);
 }
 
-#movie::before{
-  top:0;
+.cult{
+ background:
+ radial-gradient(circle at 50% 30%,#5d0808,#180303 45%,#020202 80%);
 }
 
-#movie::after{
-  bottom:0;
+.warehouse{
+ background:
+ linear-gradient(115deg,#07121a,#181818 45%,#260303);
 }
 
-/* 場景背景 */
-#background{
-  position:absolute;
-  inset:0;
-  transition:
-    background 1.3s ease,
-    transform 5s ease,
-    filter 1s ease;
+/* ===== 場景物件 ===== */
+#props{position:absolute;inset:0}
+
+.desk{
+ position:absolute;
+ width:45%;height:12%;
+ background:#201a17;
+ bottom:18%;left:28%;
+ box-shadow:0 10px 30px #000;
 }
 
-.scene-police{
-  background:
-    radial-gradient(circle at 25% 40%,#243342 0,#111820 35%,#030405 75%);
+.window{
+ position:absolute;
+ width:25%;height:35%;
+ right:8%;top:17%;
+ border:8px solid #151515;
+ background:linear-gradient(#071321,#142235);
 }
 
-.scene-street{
-  background:
-    linear-gradient(115deg,#0d1115,#222831,#050607);
+.board{
+ position:absolute;
+ width:35%;height:28%;
+ left:8%;top:20%;
+ background:#37322d;
+ border:7px solid #1c1815;
 }
 
-.scene-cult{
-  background:
-    radial-gradient(circle,#520000 0,#180000 35%,#030000 75%);
+.light{
+ position:absolute;
+ width:170px;height:170px;
+ border-radius:50%;
+ background:rgba(255,230,180,.12);
+ filter:blur(20px);
+ top:15%;left:45%;
 }
 
-.scene-room{
-  background:
-    radial-gradient(circle at center,#242424,#090909 70%);
-}
-
-.scene-final{
-  background:
-    linear-gradient(130deg,#350000,#070707 55%,#00131b);
-}
-
-/* 地面 */
-.floor{
-  position:absolute;
-  left:0;
-  bottom:0;
-  height:35%;
-  width:100%;
-  background:linear-gradient(transparent,rgba(0,0,0,.85));
-}
-
-/* 場景標題 */
-#location{
-  position:absolute;
-  top:11vh;
-  left:5vw;
-  font-size:14px;
-  letter-spacing:4px;
-  color:#aaa;
-  opacity:0;
-  transition:.7s;
-  z-index:10;
-}
-
-/* 人物 */
+/* ===== 人物 ===== */
 .character{
-  position:absolute;
-  bottom:10vh;
-  width:180px;
-  height:420px;
-  opacity:0;
-  transition:
-    left 1s ease,
-    right 1s ease,
-    opacity .7s ease,
-    transform .7s ease;
-  z-index:8;
+ position:absolute;
+ width:160px;height:420px;
+ bottom:9%;
+ opacity:0;
+ transition:all 1s ease;
+ z-index:10;
+ filter:drop-shadow(0 15px 12px #000);
 }
 
-.head{
-  width:80px;
-  height:80px;
-  border-radius:50%;
-  background:#111;
-  border:2px solid #555;
-  margin:auto;
+.character.show{opacity:1}
+
+.left{left:10%}
+.center{left:calc(50% - 80px)}
+.right{right:10%}
+
+.person{
+ position:relative;
+ width:100%;height:100%;
 }
 
-.body{
-  width:125px;
-  height:260px;
-  background:linear-gradient(#161616,#050505);
-  margin:-5px auto 0;
-  border-radius:50px 50px 10px 10px;
+.hair{
+ position:absolute;
+ width:86px;height:60px;
+ left:37px;top:5px;
+ background:#17120f;
+ border-radius:50% 50% 30% 30%;
+ z-index:4;
 }
 
-.name{
-  text-align:center;
-  margin-top:10px;
-  color:#aaa;
-  font-size:13px;
-  letter-spacing:2px;
+.face{
+ position:absolute;
+ width:76px;height:90px;
+ left:42px;top:28px;
+ background:#d6a078;
+ border-radius:45% 45% 48% 48%;
+ z-index:3;
 }
 
-#charLeft{
-  left:7vw;
+.eye{
+ position:absolute;
+ width:7px;height:5px;
+ background:#161616;
+ top:39px;
+ border-radius:50%;
 }
 
-#charCenter{
-  left:calc(50% - 90px);
+.eye.l{left:18px}
+.eye.r{right:18px}
+
+.nose{
+ position:absolute;
+ width:4px;height:13px;
+ background:#aa7559;
+ left:36px;top:47px;
 }
 
-#charRight{
-  right:7vw;
+.mouth{
+ position:absolute;
+ width:18px;height:3px;
+ background:#683d35;
+ left:29px;top:69px;
 }
 
-.visible{
-  opacity:1 !important;
+.neck{
+ position:absolute;
+ width:30px;height:35px;
+ left:65px;top:103px;
+ background:#c58f69;
 }
 
-/* 對話字幕 */
-#subtitleBox{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  bottom:11vh;
-  width:min(850px,90vw);
-  text-align:center;
-  z-index:30;
-  opacity:0;
-  transition:.3s;
+.torso{
+ position:absolute;
+ width:110px;height:180px;
+ left:25px;top:125px;
+ background:#151a20;
+ border-radius:25px 25px 8px 8px;
+}
+
+.arm{
+ position:absolute;
+ width:30px;height:175px;
+ background:#151a20;
+ top:135px;
+ border-radius:20px;
+ transform-origin:top center;
+}
+
+.arm.leftarm{left:12px;transform:rotate(5deg)}
+.arm.rightarm{right:12px;transform:rotate(-5deg)}
+
+.leg{
+ position:absolute;
+ width:43px;height:130px;
+ background:#101114;
+ top:290px;
+}
+
+.leg.l{left:34px}
+.leg.r{right:34px}
+
+.charName{
+ position:absolute;
+ width:200px;
+ left:-20px;
+ bottom:-25px;
+ text-align:center;
+ color:#aaa;
+ font-size:11px;
+ letter-spacing:3px;
+}
+
+/* Anna */
+.anna .hair{
+ height:110px;
+ background:#241712;
+}
+
+.anna .torso,
+.anna .arm{
+ background:#20242b;
+}
+
+/* Elena */
+.elena{transform:scale(.92)}
+.elena .hair{background:#332018;height:120px}
+.elena .torso,.elena .arm{background:#34343b}
+
+/* Morse */
+.morse .hair{background:#191919}
+.morse .torso,.morse .arm{background:#090909}
+.morse .face{background:#c88e68}
+
+/* ===== 電影黑邊 ===== */
+.cinemaBar{
+ position:absolute;left:0;width:100%;height:7%;
+ background:#000;z-index:50
+}
+.topbar{top:0}
+.bottombar{bottom:0}
+
+/* ===== 地點 ===== */
+#location{
+ position:absolute;
+ top:10%;
+ left:4%;
+ color:#bbb;
+ font-size:12px;
+ letter-spacing:4px;
+ z-index:40;
+}
+
+/* ===== 字幕 ===== */
+#subtitle{
+ position:absolute;
+ width:90%;
+ max-width:950px;
+ left:50%;
+ transform:translateX(-50%);
+ bottom:10%;
+ text-align:center;
+ color:white;
+ z-index:60;
+ text-shadow:0 3px 8px #000;
 }
 
 #speaker{
-  color:#c7c7c7;
-  font-size:14px;
-  letter-spacing:3px;
-  margin-bottom:10px;
+ color:#aaa;
+ font-size:12px;
+ letter-spacing:3px;
+ margin-bottom:8px;
 }
 
-#subtitle{
-  font-size:clamp(19px,2.5vw,30px);
-  font-weight:bold;
-  line-height:1.45;
-  text-shadow:0 2px 8px black;
+#line{
+ font-size:clamp(18px,2.5vw,29px);
+ font-weight:bold;
+ line-height:1.4;
 }
 
-/* 旁白 */
-#narration{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:80%;
-  text-align:center;
-  font-size:clamp(24px,4vw,55px);
-  letter-spacing:4px;
-  line-height:1.5;
-  opacity:0;
-  transition:1s;
-  z-index:40;
-}
-
-/* 電影標題 */
-#titleScreen{
-  position:absolute;
-  inset:0;
-  background:black;
-  z-index:80;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  text-align:center;
-}
-
-#titleScreen h1{
-  font-size:clamp(45px,8vw,100px);
-  letter-spacing:8px;
-  margin:0;
-}
-
-#titleScreen h2{
-  color:#777;
-  letter-spacing:5px;
-  font-size:18px;
-  font-weight:normal;
-}
-
+/* ===== 開場 ===== */
 #start{
-  margin-top:50px;
-  padding:14px 35px;
-  background:none;
-  border:1px solid white;
-  color:white;
-  font-size:17px;
-  cursor:pointer;
-  letter-spacing:3px;
+ position:absolute;inset:0;
+ z-index:100;
+ background:
+ radial-gradient(circle,#380505,#090909 50%,#000);
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
+ color:white;
+ text-align:center;
 }
 
-#start:hover{
-  background:white;
-  color:black;
+#start h1{
+ font-size:clamp(45px,8vw,95px);
+ letter-spacing:8px;
+ margin:0;
 }
 
-/* 血紅閃光 */
+#start h2{
+ color:#888;
+ letter-spacing:5px;
+ font-weight:normal;
+}
+
+button{
+ background:transparent;
+ color:white;
+ border:1px solid white;
+ padding:14px 30px;
+ margin-top:30px;
+ cursor:pointer;
+ letter-spacing:3px;
+}
+
+button:hover{background:white;color:black}
+
+/* ===== ACT ===== */
+#act{
+ position:absolute;inset:0;
+ background:#000;
+ color:white;
+ z-index:80;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ flex-direction:column;
+}
+
+#act small{letter-spacing:6px;color:#777}
+#act h1{font-size:50px;letter-spacing:7px}
+
+/* ===== 閃光 ===== */
 #flash{
-  position:absolute;
-  inset:0;
-  background:#790000;
-  opacity:0;
-  pointer-events:none;
-  z-index:45;
+ position:absolute;inset:0;
+ background:#8d0000;
+ opacity:0;
+ z-index:70;
+ pointer-events:none;
 }
 
-/* 控制 */
-#controls{
-  position:absolute;
-  top:10vh;
-  right:4vw;
-  z-index:60;
-}
+/* ===== 鏡頭 ===== */
+.closeup{transform:scale(1.22)}
+.shake{animation:shake .3s}
 
-.control{
-  background:rgba(0,0,0,.5);
-  border:1px solid #555;
-  color:white;
-  padding:8px 14px;
-  cursor:pointer;
-}
-
-/* 淡入淡出 */
-#fade{
-  position:absolute;
-  inset:0;
-  background:black;
-  pointer-events:none;
-  opacity:0;
-  transition:.8s;
-  z-index:70;
+@keyframes shake{
+ 0%{transform:translate(0)}
+ 25%{transform:translate(-10px,4px)}
+ 50%{transform:translate(8px,-3px)}
+ 75%{transform:translate(-5px,2px)}
+ 100%{transform:translate(0)}
 }
 
 @media(max-width:600px){
-
-.character{
-  width:110px;
-  height:300px;
-}
-
-.head{
-  width:60px;
-  height:60px;
-}
-
-.body{
-  width:80px;
-  height:190px;
-}
-
+.character{transform:scale(.7);transform-origin:bottom}
+.left{left:0}
+.right{right:0}
+.center{left:calc(50% - 80px)}
 }
 </style>
 </head>
@@ -307,730 +346,470 @@ body{
 
 <div id="movie">
 
-<div id="background" class="scene-street"></div>
+<div id="scene"></div>
 
-<div class="floor"></div>
+<div id="props"></div>
 
 <div id="location"></div>
 
-<div id="narration"></div>
-
-<div id="charLeft" class="character">
-  <div class="head"></div>
-  <div class="body"></div>
-  <div class="name"></div>
+<div id="alan" class="character left">
+ <div class="person">
+  <div class="hair"></div>
+  <div class="face">
+   <div class="eye l"></div><div class="eye r"></div>
+   <div class="nose"></div><div class="mouth"></div>
+  </div>
+  <div class="neck"></div>
+  <div class="torso"></div>
+  <div class="arm leftarm"></div><div class="arm rightarm"></div>
+  <div class="leg l"></div><div class="leg r"></div>
+  <div class="charName">ALAN</div>
+ </div>
 </div>
 
-<div id="charCenter" class="character">
-  <div class="head"></div>
-  <div class="body"></div>
-  <div class="name"></div>
+<div id="anna" class="character anna right">
+ <div class="person">
+  <div class="hair"></div>
+  <div class="face">
+   <div class="eye l"></div><div class="eye r"></div>
+   <div class="nose"></div><div class="mouth"></div>
+  </div>
+  <div class="neck"></div>
+  <div class="torso"></div>
+  <div class="arm leftarm"></div><div class="arm rightarm"></div>
+  <div class="leg l"></div><div class="leg r"></div>
+  <div class="charName">ANNA</div>
+ </div>
 </div>
 
-<div id="charRight" class="character">
-  <div class="head"></div>
-  <div class="body"></div>
-  <div class="name"></div>
+<div id="elena" class="character elena right">
+ <div class="person">
+  <div class="hair"></div>
+  <div class="face">
+   <div class="eye l"></div><div class="eye r"></div>
+   <div class="nose"></div><div class="mouth"></div>
+  </div>
+  <div class="neck"></div>
+  <div class="torso"></div>
+  <div class="arm leftarm"></div><div class="arm rightarm"></div>
+  <div class="leg l"></div><div class="leg r"></div>
+  <div class="charName">ELENA</div>
+ </div>
 </div>
 
-<div id="subtitleBox">
-  <div id="speaker"></div>
-  <div id="subtitle"></div>
+<div id="morse" class="character morse center">
+ <div class="person">
+  <div class="hair"></div>
+  <div class="face">
+   <div class="eye l"></div><div class="eye r"></div>
+   <div class="nose"></div><div class="mouth"></div>
+  </div>
+  <div class="neck"></div>
+  <div class="torso"></div>
+  <div class="arm leftarm"></div><div class="arm rightarm"></div>
+  <div class="leg l"></div><div class="leg r"></div>
+  <div class="charName">MORSE</div>
+ </div>
+</div>
+
+<div id="subtitle">
+ <div id="speaker"></div>
+ <div id="line"></div>
+</div>
+
+<div id="act">
+ <small id="actNumber"></small>
+ <h1 id="actTitle"></h1>
 </div>
 
 <div id="flash"></div>
-<div id="fade"></div>
 
-<div id="controls">
-  <button class="control" onclick="restartFilm()">↻ RESTART</button>
-</div>
+<div class="cinemaBar topbar"></div>
+<div class="cinemaBar bottombar"></div>
 
-<div id="titleScreen">
-
-<h1>救贖之影</h1>
-
-<h2>SHADOW OF REDEMPTION</h2>
-
-<button id="start" onclick="startFilm()">
-START FILM
-</button>
-
+<div id="start">
+ <h1>救贖之影</h1>
+ <h2>SHADOW OF REDEMPTION</h2>
+ <button onclick="begin()">▶ START FILM</button>
 </div>
 
 </div>
-
 
 <script>
 
-/* =====================================================
-   劇本
-===================================================== */
-
-const script = [
-
-/* ---------- OPENING ---------- */
-
+const scenes=[
 {
-type:"narration",
-text:"FOUR DEATHS. ONE WORD.",
-duration:3000
+ act:"ACT I",
+ title:"THE CASES",
+ place:"POLICE DEPARTMENT — NIGHT",
+ bg:"police",
+ people:["alan","anna"],
+ speaker:"ALAN",
+ line:"Four people. Four identical cases. And we still don't know how they're connected."
+},
+{
+ place:"POLICE DEPARTMENT — NIGHT",
+ bg:"police",
+ people:["alan","anna"],
+ speaker:"ANNA",
+ line:"Maybe they're not connected."
+},
+{
+ place:"POLICE DEPARTMENT — NIGHT",
+ bg:"police",
+ people:["alan","anna"],
+ speaker:"ALAN",
+ line:"People can imitate a crime. They can't imitate something the press never reported.",
+ camera:"close"
+},
+{
+ place:"POLICE DEPARTMENT — NIGHT",
+ bg:"police",
+ people:["alan","anna"],
+ speaker:"ALAN",
+ line:"Every body carried the same symbol."
+},
+{
+ place:"POLICE DEPARTMENT — NIGHT",
+ bg:"police",
+ people:["alan","anna"],
+ speaker:"ALAN",
+ line:"You froze when you saw it."
+},
+{
+ place:"POLICE DEPARTMENT — NIGHT",
+ bg:"police",
+ people:["alan","anna"],
+ speaker:"ANNA",
+ line:"Maybe I just think it's ugly."
 },
 
 {
-type:"scene",
-scene:"street",
-location:"CITY STREET — NIGHT"
+ act:"ACT II",
+ title:"THE HUNT",
+ place:"ABANDONED BUILDING",
+ bg:"abandoned",
+ people:["alan","elena"],
+ speaker:"ALAN",
+ line:"Elena. Look at me. You don't have to do this."
+},
+{
+ place:"ABANDONED BUILDING",
+ bg:"abandoned",
+ people:["alan","elena"],
+ speaker:"ELENA",
+ line:"You don't understand."
+},
+{
+ place:"ABANDONED BUILDING",
+ bg:"abandoned",
+ people:["alan","elena"],
+ speaker:"ALAN",
+ line:"Then help me understand."
+},
+{
+ place:"ABANDONED BUILDING",
+ bg:"abandoned",
+ people:["alan","elena"],
+ speaker:"ELENA",
+ line:"He said the pain could disappear."
+},
+{
+ place:"ABANDONED BUILDING",
+ bg:"abandoned",
+ people:["alan","elena"],
+ speaker:"ALAN",
+ line:"Who?"
+},
+{
+ place:"ABANDONED BUILDING",
+ bg:"abandoned",
+ people:["alan","elena"],
+ speaker:"ELENA",
+ line:"Morse."
 },
 
 {
-type:"character",
-position:"center",
-name:"UNKNOWN MAN"
+ act:"ACT III",
+ title:"THE SANCTUARY",
+ place:"THE SANCTUARY",
+ bg:"cult",
+ people:["morse"],
+ speaker:"MORSE",
+ line:"They tell you your anger is wrong."
+},
+{
+ place:"THE SANCTUARY",
+ bg:"cult",
+ people:["morse"],
+ speaker:"MORSE",
+ line:"They tell you to forgive the people who destroyed you."
+},
+{
+ place:"THE SANCTUARY",
+ bg:"cult",
+ people:["morse"],
+ speaker:"MORSE",
+ line:"Pain does not make you weak. Pain gives you purpose.",
+ camera:"close"
 },
 
 {
-type:"dialogue",
-speaker:"UNKNOWN MAN",
-text:"This... is redemption, right?",
-duration:3500
+ act:"ACT IV",
+ title:"THE TRUTH",
+ place:"POLICE DEPARTMENT — LATER",
+ bg:"police",
+ people:["alan","elena"],
+ speaker:"ELENA",
+ line:"I've seen her before."
+},
+{
+ place:"POLICE DEPARTMENT — LATER",
+ bg:"police",
+ people:["alan","elena"],
+ speaker:"ALAN",
+ line:"Who?"
+},
+{
+ place:"POLICE DEPARTMENT — LATER",
+ bg:"police",
+ people:["alan","elena"],
+ speaker:"ELENA",
+ line:"Your partner."
 },
 
 {
-type:"flash"
+ act:"FINAL ACT",
+ title:"CONFRONTATION",
+ place:"WAREHOUSE — MIDNIGHT",
+ bg:"warehouse",
+ people:["alan","anna"],
+ speaker:"ALAN",
+ line:"How long?"
 },
-
 {
-type:"narration",
-text:"THE FOURTH INCIDENT",
-duration:2500
+ place:"WAREHOUSE — MIDNIGHT",
+ bg:"warehouse",
+ people:["alan","anna"],
+ speaker:"ANNA",
+ line:"Long enough."
 },
-
-
-/* ---------- ACT 1 ---------- */
-
 {
-type:"scene",
-scene:"police",
-location:"POLICE DEPARTMENT — 11:47 PM"
+ place:"WAREHOUSE — MIDNIGHT",
+ bg:"warehouse",
+ people:["alan","anna"],
+ speaker:"ALAN",
+ line:"Those people trusted you."
 },
-
 {
-type:"characters",
-left:"ALAN",
-right:"ANNA"
+ place:"WAREHOUSE — MIDNIGHT",
+ bg:"warehouse",
+ people:["alan","anna"],
+ speaker:"ANNA",
+ line:"They trusted a world that abandoned them."
 },
-
 {
-type:"dialogue",
-speaker:"ALAN",
-text:"Four people. Four identical cases. And we still don't know how they're connected.",
-duration:5000
+ place:"WAREHOUSE — MIDNIGHT",
+ bg:"warehouse",
+ people:["alan","anna"],
+ speaker:"ALAN",
+ line:"So you decided who deserved to live?"
 },
-
 {
-type:"dialogue",
-speaker:"ANNA",
-text:"Maybe they're not connected.",
-duration:3000
+ place:"WAREHOUSE — MIDNIGHT",
+ bg:"warehouse",
+ people:["alan","anna"],
+ speaker:"ANNA",
+ line:"I gave them a choice."
 },
-
 {
-type:"dialogue",
-speaker:"ALAN",
-text:"People can imitate a crime. They can't imitate something the press never reported.",
-duration:5000
+ place:"WAREHOUSE — MIDNIGHT",
+ bg:"warehouse",
+ people:["alan","anna"],
+ speaker:"ALAN",
+ line:"You gave them a weapon.",
+ shake:true
 },
-
 {
-type:"dialogue",
-speaker:"ANNA",
-text:"What are you talking about?",
-duration:3000
+ place:"WAREHOUSE — MIDNIGHT",
+ bg:"warehouse",
+ people:["alan","anna"],
+ speaker:"ANNA",
+ line:"Walk away, Alan."
 },
-
 {
-type:"dialogue",
-speaker:"ALAN",
-text:"Every body carried the same symbol.",
-duration:4000
-},
-
-{
-type:"dialogue",
-speaker:"ALAN",
-text:"You froze when you saw it.",
-duration:3000
-},
-
-{
-type:"dialogue",
-speaker:"ANNA",
-text:"I didn't freeze.",
-duration:2500
-},
-
-{
-type:"dialogue",
-speaker:"ALAN",
-text:"You did.",
-duration:2200
-},
-
-{
-type:"dialogue",
-speaker:"ANNA",
-text:"Maybe I just think it's ugly.",
-duration:3200
-},
-
-
-/* ---------- INVESTIGATION ---------- */
-
-{
-type:"narration",
-text:"THEY HAD NOTHING IN COMMON.",
-duration:2600
-},
-
-{
-type:"narration",
-text:"EXCEPT DESPAIR.",
-duration:2400
-},
-
-{
-type:"scene",
-scene:"room",
-location:"ABANDONED BUILDING"
-},
-
-{
-type:"characters",
-left:"ALAN",
-right:"ELENA"
-},
-
-{
-type:"dialogue",
-speaker:"ALAN",
-text:"Elena. Look at me. You don't have to do this.",
-duration:4500
-},
-
-{
-type:"dialogue",
-speaker:"ELENA",
-text:"You don't understand.",
-duration:3000
-},
-
-{
-type:"dialogue",
-speaker:"ALAN",
-text:"Then help me understand.",
-duration:3000
-},
-
-{
-type:"dialogue",
-speaker:"ELENA",
-text:"He said the pain could disappear.",
-duration:4000
-},
-
-{
-type:"dialogue",
-speaker:"ALAN",
-text:"Who?",
-duration:1800
-},
-
-{
-type:"dialogue",
-speaker:"ELENA",
-text:"Morse.",
-duration:2600
-},
-
-
-/* ---------- CULT ---------- */
-
-{
-type:"scene",
-scene:"cult",
-location:"THE SANCTUARY"
-},
-
-{
-type:"characters",
-center:"MORSE"
-},
-
-{
-type:"dialogue",
-speaker:"MORSE",
-text:"They tell you your anger is wrong.",
-duration:3500
-},
-
-{
-type:"dialogue",
-speaker:"MORSE",
-text:"They tell you to forgive the people who destroyed you.",
-duration:4500
-},
-
-{
-type:"dialogue",
-speaker:"MORSE",
-text:"But I tell you something different.",
-duration:3500
-},
-
-{
-type:"dialogue",
-speaker:"MORSE",
-text:"Pain does not make you weak. Pain gives you purpose.",
-duration:5000
-},
-
-{
-type:"flash"
-},
-
-
-/* ---------- REVELATION ---------- */
-
-{
-type:"scene",
-scene:"police",
-location:"POLICE DEPARTMENT — LATER"
-},
-
-{
-type:"characters",
-left:"ALAN",
-right:"ELENA"
-},
-
-{
-type:"dialogue",
-speaker:"ELENA",
-text:"I've seen her before.",
-duration:3000
-},
-
-{
-type:"dialogue",
-speaker:"ALAN",
-text:"Who?",
-duration:1800
-},
-
-{
-type:"dialogue",
-speaker:"ELENA",
-text:"Your partner.",
-duration:3000
-},
-
-{
-type:"narration",
-text:"THE TRUTH WAS NEVER FAR AWAY.",
-duration:3000
-},
-
-
-/* ---------- FINAL ---------- */
-
-{
-type:"scene",
-scene:"final",
-location:"WAREHOUSE — MIDNIGHT"
-},
-
-{
-type:"characters",
-left:"ALAN",
-right:"ANNA"
-},
-
-{
-type:"dialogue",
-speaker:"ALAN",
-text:"How long?",
-duration:2200
-},
-
-{
-type:"dialogue",
-speaker:"ANNA",
-text:"Long enough.",
-duration:2500
-},
-
-{
-type:"dialogue",
-speaker:"ALAN",
-text:"Those people trusted you.",
-duration:3000
-},
-
-{
-type:"dialogue",
-speaker:"ANNA",
-text:"No. They trusted a world that abandoned them.",
-duration:4500
-},
-
-{
-type:"dialogue",
-speaker:"ALAN",
-text:"So you decided who deserved to live?",
-duration:4000
-},
-
-{
-type:"dialogue",
-speaker:"ANNA",
-text:"I gave them a choice.",
-duration:3000
-},
-
-{
-type:"dialogue",
-speaker:"ALAN",
-text:"You gave them a weapon.",
-duration:3000
-},
-
-{
-type:"flash"
-},
-
-{
-type:"dialogue",
-speaker:"ANNA",
-text:"Walk away, Alan.",
-duration:3000
-},
-
-{
-type:"dialogue",
-speaker:"ALAN",
-text:"You know I can't.",
-duration:3000
-},
-
-{
-type:"flash"
-},
-
-{
-type:"narration",
-text:"NOT EVERYONE WHO SEEKS REDEMPTION FINDS SALVATION.",
-duration:5000
-},
-
-{
-type:"narration",
-text:"SHADOW OF REDEMPTION",
-duration:4500
-},
-
-{
-type:"narration",
-text:"THE END",
-duration:5000
+ place:"WAREHOUSE — MIDNIGHT",
+ bg:"warehouse",
+ people:["alan","anna"],
+ speaker:"ALAN",
+ line:"You know I can't.",
+ camera:"close"
 }
-
 ];
 
+let i=0;
 
-/* =====================================================
-   電影引擎
-===================================================== */
-
-let running=false;
-let index=0;
-
-const bg=document.getElementById("background");
-const locationText=document.getElementById("location");
-
-const subtitleBox=document.getElementById("subtitleBox");
-const speaker=document.getElementById("speaker");
-const subtitle=document.getElementById("subtitle");
-
-const narration=document.getElementById("narration");
-
-const left=document.getElementById("charLeft");
-const center=document.getElementById("charCenter");
-const right=document.getElementById("charRight");
-
-const fade=document.getElementById("fade");
-const flash=document.getElementById("flash");
-
+const ids=["alan","anna","elena","morse"];
 
 function sleep(ms){
-return new Promise(resolve=>setTimeout(resolve,ms));
+ return new Promise(r=>setTimeout(r,ms));
 }
 
-
-function hideCharacters(){
-
-[left,center,right].forEach(c=>{
-c.classList.remove("visible");
-});
-
+async function begin(){
+ document.getElementById("start").style.display="none";
+ await play();
 }
-
-
-function characterName(element,name){
-
-element.querySelector(".name").innerText=name;
-
-}
-
-
-async function startFilm(){
-
-document.getElementById("titleScreen").style.display="none";
-
-running=true;
-index=0;
-
-await play();
-
-}
-
 
 async function play(){
 
-while(index<script.length && running){
+ if(i>=scenes.length){
+   endMovie();
+   return;
+ }
 
-const event=script[index];
+ const s=scenes[i];
 
-await execute(event);
+ if(s.act){
+   await showAct(s.act,s.title);
+ }
 
-index++;
+ setScene(s);
+ speak(s.line,s.speaker);
 
+ await sleep(4500);
+
+ i++;
+ play();
 }
 
+function setScene(s){
+
+ const scene=document.getElementById("scene");
+
+ scene.className=s.bg;
+
+ scene.classList.remove("closeup");
+
+ if(s.camera==="close"){
+   scene.classList.add("closeup");
+ }
+
+ document.getElementById("location").innerText=s.place;
+ document.getElementById("speaker").innerText=s.speaker;
+ document.getElementById("line").innerText=s.line;
+
+ ids.forEach(id=>{
+   document.getElementById(id).classList.remove("show");
+ });
+
+ s.people.forEach(id=>{
+   document.getElementById(id).classList.add("show");
+ });
+
+ buildProps(s.bg);
+
+ if(s.shake){
+   document.getElementById("movie").classList.add("shake");
+   flash();
+   setTimeout(()=>{
+     document.getElementById("movie").classList.remove("shake");
+   },400);
+ }
 }
 
+function buildProps(bg){
 
-async function execute(e){
+ const props=document.getElementById("props");
 
+ props.innerHTML="";
 
-/* SCENE */
+ if(bg==="police"){
+   props.innerHTML=
+   '<div class="window"></div>'+
+   '<div class="board"></div>'+
+   '<div class="desk"></div>';
+ }
 
-if(e.type==="scene"){
+ if(bg==="cult"){
+   props.innerHTML='<div class="light"></div>';
+ }
 
-fade.style.opacity=1;
-
-await sleep(700);
-
-bg.className="";
-
-bg.classList.add("scene-"+e.scene);
-
-bg.style.transform="scale(1.05)";
-
-hideCharacters();
-
-locationText.innerText=e.location;
-locationText.style.opacity=1;
-
-await sleep(700);
-
-fade.style.opacity=0;
-
-await sleep(700);
-
-return;
-
+ if(bg==="warehouse"){
+   props.innerHTML='<div class="light"></div>';
+ }
 }
 
+async function showAct(number,title){
 
-/* CHARACTER */
+ const a=document.getElementById("act");
 
-if(e.type==="character"){
+ document.getElementById("actNumber").innerText=number;
+ document.getElementById("actTitle").innerText=title;
 
-hideCharacters();
+ a.style.display="flex";
 
-let target=center;
+ await sleep(2200);
 
-if(e.position==="left")target=left;
-if(e.position==="right")target=right;
-
-characterName(target,e.name);
-
-target.classList.add("visible");
-
-await sleep(700);
-
-return;
-
+ a.style.display="none";
 }
-
-
-/* CHARACTERS */
-
-if(e.type==="characters"){
-
-hideCharacters();
-
-if(e.left){
-characterName(left,e.left);
-left.classList.add("visible");
-}
-
-if(e.center){
-characterName(center,e.center);
-center.classList.add("visible");
-}
-
-if(e.right){
-characterName(right,e.right);
-right.classList.add("visible");
-}
-
-await sleep(700);
-
-return;
-
-}
-
-
-/* DIALOGUE */
-
-if(e.type==="dialogue"){
-
-speaker.innerText=e.speaker;
-subtitle.innerText=e.text;
-
-subtitleBox.style.opacity=1;
-
-speak(e.text,e.speaker);
-
-await sleep(e.duration || 3500);
-
-subtitleBox.style.opacity=0;
-
-await sleep(350);
-
-return;
-
-}
-
-
-/* NARRATION */
-
-if(e.type==="narration"){
-
-hideCharacters();
-
-subtitleBox.style.opacity=0;
-
-narration.innerText=e.text;
-
-narration.style.opacity=1;
-
-await sleep(e.duration || 3000);
-
-narration.style.opacity=0;
-
-await sleep(700);
-
-return;
-
-}
-
-
-/* FLASH */
-
-if(e.type==="flash"){
-
-flash.style.opacity=.7;
-
-await sleep(120);
-
-flash.style.opacity=0;
-
-await sleep(300);
-
-return;
-
-}
-
-}
-
-
-/* =====================================================
-   AI 類語音
-   使用瀏覽器 Speech Synthesis
-===================================================== */
 
 function speak(text,name){
 
-if(!("speechSynthesis" in window))return;
+ if(!("speechSynthesis" in window))return;
 
-speechSynthesis.cancel();
+ speechSynthesis.cancel();
 
-const voice=new SpeechSynthesisUtterance(text);
+ const u=new SpeechSynthesisUtterance(text);
 
-voice.lang="en-US";
+ u.lang="en-US";
 
-voice.rate=.87;
+ if(name==="ALAN"){
+   u.rate=.88;
+   u.pitch=.82;
+ }
 
-voice.pitch=1;
+ if(name==="ANNA"){
+   u.rate=.9;
+   u.pitch=1.02;
+ }
 
-if(name==="MORSE"){
-voice.rate=.72;
-voice.pitch=.75;
+ if(name==="ELENA"){
+   u.rate=.88;
+   u.pitch=1.15;
+ }
+
+ if(name==="MORSE"){
+   u.rate=.7;
+   u.pitch=.65;
+ }
+
+ speechSynthesis.speak(u);
 }
 
-if(name==="ANNA"){
-voice.pitch=.9;
+async function flash(){
+
+ const f=document.getElementById("flash");
+
+ f.style.opacity=".65";
+
+ await sleep(100);
+
+ f.style.opacity="0";
 }
 
-if(name==="ELENA"){
-voice.rate=.9;
-voice.pitch=1.15;
+function endMovie(){
+
+ speechSynthesis.cancel();
+
+ ids.forEach(id=>{
+   document.getElementById(id).classList.remove("show");
+ });
+
+ document.getElementById("location").innerText="";
+ document.getElementById("speaker").innerText="";
+ document.getElementById("line").innerHTML=
+ "<span style='font-size:45px;letter-spacing:7px'>THE END</span><br><br>SHADOW OF REDEMPTION";
 }
-
-speechSynthesis.speak(voice);
-
-}
-
-
-/* =====================================================
-   RESTART
-===================================================== */
-
-function restartFilm(){
-
-running=false;
-
-speechSynthesis.cancel();
-
-index=0;
-
-hideCharacters();
-
-subtitleBox.style.opacity=0;
-narration.style.opacity=0;
-
-setTimeout(()=>{
-
-running=true;
-
-play();
-
-},500);
-
-}
-
 </script>
 
 </body>
