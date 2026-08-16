@@ -1,146 +1,824 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Medical Case Library</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, "Microsoft JhengHei", sans-serif;
-      background: white;
-      color: #222;
-    }
+<title>Medical Case Library</title>
 
-    header {
-      background: #f4f7fb;
-      padding: 40px 20px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 36px;
-    }
+body {
+  margin: 0;
+  font-family: Arial, "Microsoft JhengHei", sans-serif;
+  background: #ffffff;
+  color: #202124;
+}
 
-    header p {
-      color: #666;
-      margin-top: 10px;
-    }
+header {
+  background: #f5f7fa;
+  border-bottom: 1px solid #ddd;
+  padding: 35px 20px;
+  text-align: center;
+}
 
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
+header h1 {
+  margin: 0;
+  font-size: 34px;
+}
 
-    .section-title {
-      font-size: 26px;
-      margin-bottom: 20px;
-    }
+header p {
+  margin: 8px 0 0;
+  color: #666;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
+.container {
+  max-width: 1050px;
+  margin: 35px auto;
+  padding: 0 20px;
+}
 
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 22px;
-      background: white;
-      text-decoration: none;
-      color: #222;
-      transition: 0.2s;
-    }
+.search {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-    }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 18px;
+}
 
-    .card h2 {
-      margin-top: 0;
-      font-size: 21px;
-    }
+.card {
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 22px;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-    .card p {
-      color: #666;
-      margin-bottom: 0;
-    }
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 7px 20px rgba(0,0,0,0.10);
+}
 
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: #888;
-      font-size: 14px;
-    }
-  </style>
+.card h2 {
+  margin-top: 0;
+  font-size: 21px;
+}
+
+.card p {
+  color: #666;
+  margin-bottom: 0;
+}
+
+.back {
+  border: none;
+  background: #eee;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  font-size: 15px;
+}
+
+.back:hover {
+  background: #ddd;
+}
+
+.case-box {
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 25px;
+  margin-bottom: 20px;
+}
+
+.case-box h3 {
+  margin-top: 0;
+}
+
+.tag {
+  display: inline-block;
+  background: #eef2f7;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 13px;
+  margin-right: 5px;
+}
+
+.section {
+  margin-top: 30px;
+}
+
+.section h2 {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  text-align: center;
+  color: #999;
+  padding: 40px 20px;
+}
+</style>
 </head>
+
 
 <body>
 
-  <header>
-    <h1>Medical Case Library</h1>
-    <p>醫學病例學習資料庫</p>
-  </header>
+<header>
+  <h1>Medical Case Library</h1>
+  <p>醫學病例學習資料庫</p>
+</header>
 
-  <div class="container">
 
-    <h2 class="section-title">病例分類</h2>
+<!-- ==================== 首頁 ==================== -->
 
-    <div class="grid">
+<div id="home" class="container">
 
-      <a class="card" href="#">
-        <h2>❤️ Cardiology</h2>
-        <p>心臟與心血管疾病病例</p>
-      </a>
+<input
+  class="search"
+  id="search"
+  placeholder="搜尋疾病，例如：心肌梗塞、Asthma、Stroke..."
+  onkeyup="searchCases()"
+>
 
-      <a class="card" href="#">
-        <h2>🧠 Neurology</h2>
-        <p>神經系統疾病病例</p>
-      </a>
+<h2>選擇科別</h2>
 
-      <a class="card" href="#">
-        <h2>🫁 Pulmonology</h2>
-        <p>肺部與呼吸系統病例</p>
-      </a>
+<div class="grid">
 
-      <a class="card" href="#">
-        <h2>🩺 Gastroenterology</h2>
-        <p>腸胃與肝膽疾病病例</p>
-      </a>
+<div class="card" onclick="openDepartment('cardiology')">
+<h2>❤️ 心臟科</h2>
+<p>Cardiology</p>
+</div>
 
-      <a class="card" href="#">
-        <h2>💧 Nephrology</h2>
-        <p>腎臟與泌尿系統病例</p>
-      </a>
+<div class="card" onclick="openDepartment('neurology')">
+<h2>🧠 神經科</h2>
+<p>Neurology</p>
+</div>
 
-      <a class="card" href="#">
-        <h2>🧪 Endocrinology</h2>
-        <p>內分泌與代謝疾病病例</p>
-      </a>
+<div class="card" onclick="openDepartment('pulmonology')">
+<h2>🫁 胸腔科</h2>
+<p>Pulmonology</p>
+</div>
 
-      <a class="card" href="#">
-        <h2>🦠 Infectious Disease</h2>
-        <p>感染症病例</p>
-      </a>
+<div class="card" onclick="openDepartment('gastro')">
+<h2>🩺 腸胃科</h2>
+<p>Gastroenterology</p>
+</div>
 
-      <a class="card" href="#">
-        <h2>📁 All Cases</h2>
-        <p>查看全部病例</p>
-      </a>
+<div class="card" onclick="openDepartment('nephrology')">
+<h2>💧 腎臟科</h2>
+<p>Nephrology</p>
+</div>
 
-    </div>
+<div class="card" onclick="openDepartment('endocrine')">
+<h2>🧪 內分泌科</h2>
+<p>Endocrinology</p>
+</div>
 
-  </div>
+<div class="card" onclick="openDepartment('infectious')">
+<h2>🦠 感染科</h2>
+<p>Infectious Disease</p>
+</div>
 
-  <footer>
-    Medical Case Library
-  </footer>
+<div class="card" onclick="openDepartment('all')">
+<h2>📚 全部病例</h2>
+<p>All Cases</p>
+</div>
+
+</div>
+
+<div id="searchResults" class="section"></div>
+
+</div>
+
+
+
+<!-- ==================== 疾病列表 ==================== -->
+
+<div id="department" class="container hidden">
+
+<button class="back" onclick="goHome()">← 返回首頁</button>
+
+<h1 id="departmentTitle"></h1>
+
+<div id="diseaseList" class="grid"></div>
+
+</div>
+
+
+
+<!-- ==================== 病例 ==================== -->
+
+<div id="casePage" class="container hidden">
+
+<button class="back" onclick="goDepartment()">← 返回疾病列表</button>
+
+<h1 id="caseTitle"></h1>
+
+<div id="caseContent"></div>
+
+</div>
+
+
+
+<footer>
+Medical Case Library · For Educational Use
+</footer>
+
+
+
+<script>
+
+/* =============================================
+   病例資料庫
+   以後新增病例主要修改這裡
+============================================= */
+
+const cases = [
+
+{
+id: "mi",
+department: "cardiology",
+name: "急性心肌梗塞",
+english: "Acute Myocardial Infarction",
+icon: "❤️",
+
+patient: `
+<strong>患者：</strong>58 歲男性<br>
+<strong>主訴：</strong>突然出現持續性胸痛約 40 分鐘。
+`,
+
+history: `
+患者突然出現胸骨後方壓迫性疼痛，
+疼痛延伸至左肩及左手臂，伴隨冒冷汗與噁心。
+休息後症狀沒有明顯改善。
+`,
+
+exam: `
+心跳偏快，患者焦躁並大量出汗。
+需立即評估生命徵象與循環狀況。
+`,
+
+tests: `
+<strong>ECG：</strong>可能出現 ST-segment elevation。<br><br>
+<strong>血液：</strong>Troponin 升高可支持心肌損傷。
+`,
+
+diagnosis: `
+急性心肌梗塞（Acute Myocardial Infarction）。
+需結合症狀、心電圖與心肌損傷生物標記進行判斷。
+`,
+
+treatment: `
+屬於醫療急症，需要立即送醫評估。
+臨床治療依心肌梗塞類型及患者狀況決定，
+可能包括抗血小板治療與冠狀動脈再灌流治療。
+`,
+
+points: `
+• 壓迫性胸痛<br>
+• 左肩或左臂放射痛<br>
+• ECG 是重要檢查<br>
+• Troponin 是重要心肌損傷指標
+`
+},
+
+
+{
+id: "af",
+department: "cardiology",
+name: "心房顫動",
+english: "Atrial Fibrillation",
+icon: "❤️",
+
+patient: `
+<strong>患者：</strong>72 歲女性<br>
+<strong>主訴：</strong>心悸與頭暈。
+`,
+
+history: `
+患者間歇性出現心悸，感覺心跳不規則。
+`,
+
+exam: `
+脈搏節律不規則。
+`,
+
+tests: `
+ECG 可見不規則的 R-R interval，
+且正常 P wave 消失。
+`,
+
+diagnosis: `
+心房顫動（Atrial Fibrillation）。
+`,
+
+treatment: `
+治療需依患者狀況評估心室速率控制、
+節律控制以及血栓栓塞風險。
+`,
+
+points: `
+• Irregularly irregular rhythm<br>
+• P wave 消失<br>
+• 注意血栓與中風風險
+`
+},
+
+
+{
+id: "stroke",
+department: "neurology",
+name: "缺血性腦中風",
+english: "Ischemic Stroke",
+icon: "🧠",
+
+patient: `
+<strong>患者：</strong>67 歲男性<br>
+<strong>主訴：</strong>突然右側肢體無力。
+`,
+
+history: `
+患者突然出現右手與右腳無力，
+同時出現說話困難。
+`,
+
+exam: `
+右側肌力下降並有語言功能異常。
+`,
+
+tests: `
+需進行緊急腦部影像檢查，
+首先區分缺血性與出血性腦中風。
+`,
+
+diagnosis: `
+疑似急性缺血性腦中風。
+`,
+
+treatment: `
+屬於時間敏感的醫療急症，
+需立即送醫並由醫療團隊評估再灌流治療適應症。
+`,
+
+points: `
+• Face drooping<br>
+• Arm weakness<br>
+• Speech difficulty<br>
+• Time is critical
+`
+},
+
+
+{
+id: "asthma",
+department: "pulmonology",
+name: "氣喘",
+english: "Asthma",
+icon: "🫁",
+
+patient: `
+<strong>患者：</strong>17 歲男性<br>
+<strong>主訴：</strong>呼吸困難及喘鳴。
+`,
+
+history: `
+運動後容易出現喘鳴與胸悶，
+部分症狀在夜間較明顯。
+`,
+
+exam: `
+肺部聽診可能出現 wheezing。
+`,
+
+tests: `
+肺功能檢查可協助評估可逆性氣流阻塞。
+`,
+
+diagnosis: `
+氣喘（Asthma）。
+`,
+
+treatment: `
+治療依症狀嚴重度及控制程度制定，
+通常包含吸入型藥物治療。
+`,
+
+points: `
+• Wheezing<br>
+• Airway inflammation<br>
+• Reversible airflow obstruction
+`
+},
+
+
+{
+id: "appendicitis",
+department: "gastro",
+name: "急性闌尾炎",
+english: "Acute Appendicitis",
+icon: "🩺",
+
+patient: `
+<strong>患者：</strong>18 歲男性<br>
+<strong>主訴：</strong>腹痛與噁心。
+`,
+
+history: `
+疼痛最初位於肚臍周圍，
+之後逐漸移動至右下腹。
+`,
+
+exam: `
+右下腹可能出現明顯壓痛。
+`,
+
+tests: `
+血液檢查及腹部影像可協助診斷。
+`,
+
+diagnosis: `
+急性闌尾炎（Acute Appendicitis）。
+`,
+
+treatment: `
+需由醫療團隊評估，
+部分患者需要手術治療。
+`,
+
+points: `
+• Periumbilical pain<br>
+• Right lower quadrant pain<br>
+• Migration of pain
+`
+},
+
+
+{
+id: "aki",
+department: "nephrology",
+name: "急性腎損傷",
+english: "Acute Kidney Injury",
+icon: "💧",
+
+patient: `
+<strong>患者：</strong>65 歲男性<br>
+<strong>主訴：</strong>尿量明顯減少。
+`,
+
+history: `
+近期出現嚴重腹瀉及水分攝取不足。
+`,
+
+exam: `
+可能出現脫水相關表現。
+`,
+
+tests: `
+需評估 serum creatinine、尿量、
+電解質以及可能的病因。
+`,
+
+diagnosis: `
+急性腎損傷（Acute Kidney Injury）。
+`,
+
+treatment: `
+治療重點是找出並處理造成腎功能惡化的原因。
+`,
+
+points: `
+• Creatinine<br>
+• Urine output<br>
+• Fluid status<br>
+• Electrolytes
+`
+},
+
+
+{
+id: "dka",
+department: "endocrine",
+name: "糖尿病酮酸中毒",
+english: "Diabetic Ketoacidosis",
+icon: "🧪",
+
+patient: `
+<strong>患者：</strong>16 歲女性<br>
+<strong>主訴：</strong>口渴、頻尿、噁心及呼吸異常。
+`,
+
+history: `
+近期明顯口渴與頻尿，
+之後出現噁心及全身無力。
+`,
+
+exam: `
+可能出現脫水及深快呼吸。
+`,
+
+tests: `
+需評估血糖、ketones、
+acid-base status 與電解質。
+`,
+
+diagnosis: `
+糖尿病酮酸中毒（Diabetic Ketoacidosis）。
+`,
+
+treatment: `
+屬於醫療急症，
+需要補充液體、胰島素及密切監測電解質。
+`,
+
+points: `
+• Hyperglycemia<br>
+• Ketones<br>
+• Metabolic acidosis<br>
+• Kussmaul respiration
+`
+},
+
+
+{
+id: "sepsis",
+department: "infectious",
+name: "敗血症",
+english: "Sepsis",
+icon: "🦠",
+
+patient: `
+<strong>患者：</strong>70 歲男性<br>
+<strong>主訴：</strong>發燒、意識改變。
+`,
+
+history: `
+近期有感染症狀，
+之後逐漸出現意識狀態改變。
+`,
+
+exam: `
+可能出現心跳加快、呼吸加快、
+低血壓或器官灌流異常。
+`,
+
+tests: `
+需依臨床狀況進行感染來源、
+血液及器官功能相關檢查。
+`,
+
+diagnosis: `
+疑似敗血症（Sepsis）。
+`,
+
+treatment: `
+屬於醫療急症，
+需要迅速評估並治療感染及器官功能異常。
+`,
+
+points: `
+• Infection<br>
+• Organ dysfunction<br>
+• Early recognition is important
+`
+}
+
+];
+
+
+/* =============================================
+   科別名稱
+============================================= */
+
+const departmentNames = {
+
+cardiology: "❤️ 心臟科 Cardiology",
+neurology: "🧠 神經科 Neurology",
+pulmonology: "🫁 胸腔科 Pulmonology",
+gastro: "🩺 腸胃科 Gastroenterology",
+nephrology: "💧 腎臟科 Nephrology",
+endocrine: "🧪 內分泌科 Endocrinology",
+infectious: "🦠 感染科 Infectious Disease",
+all: "📚 全部病例"
+
+};
+
+
+let currentDepartment = "all";
+
+
+/* =============================================
+   開啟科別
+============================================= */
+
+function openDepartment(dep) {
+
+currentDepartment = dep;
+
+document.getElementById("home").classList.add("hidden");
+document.getElementById("casePage").classList.add("hidden");
+document.getElementById("department").classList.remove("hidden");
+
+document.getElementById("departmentTitle").innerHTML =
+departmentNames[dep];
+
+const list = document.getElementById("diseaseList");
+
+list.innerHTML = "";
+
+const filtered =
+dep === "all"
+? cases
+: cases.filter(c => c.department === dep);
+
+if(filtered.length === 0) {
+
+list.innerHTML =
+"<p>目前這個科別還沒有病例。</p>";
+
+return;
+
+}
+
+filtered.forEach(c => {
+
+list.innerHTML += `
+
+<div class="card" onclick="openCase('${c.id}')">
+
+<h2>${c.icon} ${c.name}</h2>
+
+<p>${c.english}</p>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* =============================================
+   開啟病例
+============================================= */
+
+function openCase(id) {
+
+const c = cases.find(x => x.id === id);
+
+document.getElementById("department").classList.add("hidden");
+document.getElementById("home").classList.add("hidden");
+document.getElementById("casePage").classList.remove("hidden");
+
+document.getElementById("caseTitle").innerHTML =
+`${c.icon} ${c.name}<br>
+<span style="font-size:18px;color:#777">
+${c.english}
+</span>`;
+
+document.getElementById("caseContent").innerHTML = `
+
+<div class="case-box">
+<h3>👤 Patient Information｜患者資料</h3>
+${c.patient}
+</div>
+
+<div class="case-box">
+<h3>📋 History｜病史</h3>
+${c.history}
+</div>
+
+<div class="case-box">
+<h3>🩺 Physical Examination｜理學檢查</h3>
+${c.exam}
+</div>
+
+<div class="case-box">
+<h3>🔬 Laboratory / Imaging｜檢驗與影像</h3>
+${c.tests}
+</div>
+
+<div class="case-box">
+<h3>🔎 Diagnosis｜診斷</h3>
+${c.diagnosis}
+</div>
+
+<div class="case-box">
+<h3>💊 Treatment｜治療</h3>
+${c.treatment}
+</div>
+
+<div class="case-box">
+<h3>🎯 Learning Points｜學習重點</h3>
+${c.points}
+</div>
+
+`;
+
+window.scrollTo(0,0);
+
+}
+
+
+/* =============================================
+   返回
+============================================= */
+
+function goHome() {
+
+document.getElementById("department").classList.add("hidden");
+document.getElementById("casePage").classList.add("hidden");
+document.getElementById("home").classList.remove("hidden");
+
+window.scrollTo(0,0);
+
+}
+
+
+function goDepartment() {
+
+document.getElementById("casePage").classList.add("hidden");
+document.getElementById("department").classList.remove("hidden");
+
+window.scrollTo(0,0);
+
+}
+
+
+/* =============================================
+   搜尋
+============================================= */
+
+function searchCases() {
+
+const input =
+document.getElementById("search").value.toLowerCase();
+
+const results =
+document.getElementById("searchResults");
+
+results.innerHTML = "";
+
+if(input.trim() === "") {
+return;
+}
+
+const filtered = cases.filter(c =>
+
+c.name.toLowerCase().includes(input) ||
+c.english.toLowerCase().includes(input)
+
+);
+
+if(filtered.length === 0) {
+
+results.innerHTML =
+"<p>找不到符合的病例。</p>";
+
+return;
+
+}
+
+results.innerHTML =
+"<h2>搜尋結果</h2><div class='grid' id='resultGrid'></div>";
+
+const grid =
+document.getElementById("resultGrid");
+
+filtered.forEach(c => {
+
+grid.innerHTML += `
+
+<div class="card" onclick="openCase('${c.id}')">
+
+<h2>${c.icon} ${c.name}</h2>
+
+<p>${c.english}</p>
+
+</div>
+
+`;
+
+});
+
+}
+
+</script>
 
 </body>
 </html>
